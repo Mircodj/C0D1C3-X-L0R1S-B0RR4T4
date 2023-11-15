@@ -15,6 +15,7 @@ Fetch (usando curl):
     curl <address>
     curl --cookie "<cookie_name>=<cookie_value>" <uri>
     curl <url> -X POST --data "<param1>=<val1>&<param2>=<val2>"
+    (Tip S3xy by Espo: https://curlbuilder.com/ per buildare delle richieste in maniera EZ)
 
 SQL injection
     Enter 'OR 1=1-- in login form
