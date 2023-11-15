@@ -147,7 +147,7 @@ f = open("encrypted", "r").readline()
 def customXOR(text, key):
     out = ""
     for i in range(0, len(text)):
-        out += (chr( ord(text[i]) ^ ord(key[i%2])))
+        out += (chr( ord(text[i]) ^ ord(key[i%len(key)])))
     return out
                  
 for a in alph:
