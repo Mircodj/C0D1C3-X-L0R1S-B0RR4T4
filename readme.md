@@ -15,6 +15,15 @@ https://github.com/hugsy/gef
 ### Cutter
 https://cutter.re/
 
+### Installare PWNtools
+```bash
+pip3 install pwntools
+```
+Manca però Rust
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
 <hr>
 <br>
 
@@ -42,8 +51,18 @@ https://cutter.re/
 
 <b>Feature di GDB</b>: una volta inserito un comando, se si preme enter senza digitare nulla viene reiterato il comando stesso.
 
-# Nota del Merja
-Mancano i writeup della 4a lezione della seconda parte e dell'ultimo es della 5a e l'integrazione con Mirco
+# Template per l'utilizzo di PWNtools (Python)
+```python
+from pwn import * #Import della lib. pwntools
+from process('./binary') as r: #oppure gdb.debug('binary')
+    r.sendline(b'<input>')
+    r.recvall() #Riceve tutto l'output
+    r.recvuntil(b'<outputWaited>')
+    p64(<numero>) #packing per ELF64bit
+    p32(<numero>) #packing per ELF32bit
+    #Utilizziamo il packing quando vogliamo inviare numeri che andranno scritti su variabili int o scrivere indirizzi (per esempio per il memory overflow su ret. address)
+    r.interactive() #Attacca l'input e output di r al terminale (utile per shellcode)
+```
 
 # Come risolvere gli esercizi
 Vi sono 5 categorie di esercizi:
@@ -52,9 +71,3 @@ Vi sono 5 categorie di esercizi:
 - Debugging
 - Pwning
 - Shellcode
-
-<br>
-
-Come le intende il prof:
-- Static Analysis: ovvero senza necessità di patchare ma di analisi del ASM del binario
-- Dynamic Analysis: analisi del ASM e patching dove serve, o u
